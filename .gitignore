@@ -1,0 +1,7 @@
+# SPDX-FileCopyrightText: 2021 Arthur Brainville (Ybalrid) <ybalrid@ybalrid.info>
+#
+# SPDX-License-Identifier: CC0-1.0
+
+build/
+src/layer_config.hpp
+src/manifest.json

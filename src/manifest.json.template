@@ -1,0 +1,11 @@
+{
+  "file_format_version": "1.0.0",
+  "api_layer": {
+    "name": "@layer_name@",
+    "disable_environment": "@layer_name@_DISABLE",
+    "api_version": "1.0",
+    "implementation_version": "@layer_version@",
+    "description": "@layer_description@",
+    "library_path": "@current_folder_path_prefix@@library_filename@"@instance_extension_list@
+  }
+}

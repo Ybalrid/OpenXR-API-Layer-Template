@@ -1,0 +1,7 @@
+# SPDX-FileCopyrightText: 2021 Arthur Brainville (Ybalrid) <ybalrid@ybalrid.info>
+#
+# SPDX-License-Identifier: CC0-1.0
+
+[submodule "OpenXR-SDK"]
+	path = OpenXR-SDK
+	url = https://github.com/KhronosGroup/OpenXR-SDK.git
