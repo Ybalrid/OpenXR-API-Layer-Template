@@ -13,9 +13,9 @@ They can be used for validation of the API or for implementing additional OpenXR
 
 ## Configuration
 
-This project is CMake-based and uses CMake to configure some parts of the source code.
+This project is CMake-based. The configuration for the layer manifest, including extension declaration, happens in the top-level CMakeList.txt file.
 
-In the make CMakeLists.txt file at the root of the repository, you can edit the following lines:
+In the make CMakeLists.txt file at the root of the repository, you should edit the following lines:
 
 ```cmake
 project(OpenXR-layer-template)
@@ -25,7 +25,10 @@ set(layer_version "1")
 set(layer_description "some text here")
 ```
 
-These configure both the source code and the manifest file.
+These values are used to configure both the source code and the manifest file for distribution and loading.
+
+Please refer to the comments in the file for more information. For the declaration of OpenXR extensions that you wish to implement, 
+please refer to the following sections of this readme file.
 
 ## Building
 
@@ -127,7 +130,7 @@ This is the internal API that you are expected to access inside `layer_shims.cpp
 ### Macros
 
 ```cpp
-PFN_xrFuctnionName_GetNextLayerFunction(xrFunctionName);
+PFN_xrFunctionName GetNextLayerFunction(xrFunctionName);
 ```
 
 Return the pointer to `xrFunctionName`, with the correct function pointer type.
