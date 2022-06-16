@@ -47,7 +47,7 @@ Refer to the example implementation of intercepting calls to `xrEndFrame` in `la
 The two main things are 
 
 1. Define a function that has the same signature as the OpenXR function it should implement
-1. If the function is a shim of an OpenXR runtime function, you will need to call the original function
+1. If the function is a shim of an existing OpenXR runtime function (as, in the core spec), you will need to call the original function within it. 
 
 Here's an example for xrEndFrame, that will print in the console the display time of every single frame:
 
@@ -67,7 +67,8 @@ XRAPI_ATTR XrResult XRAPI_CALL thisLayer_xrEndFrame(XrSession session, const XrF
 }
 ```
 
-The initialization process stores the function pointer for the next layer (or the instance we actually can't know and should act transparently).
+The initialization process stores the function pointer for either the next layer, or the instance. (We actually cannot really know if we are the last layer in the chain, and we should act transparently regardless).
+
 The `GetNextLayerFunction(xrFunctionName)` macro is a helper to allow you to retrive it from the `OpenXRLayer` instance.
 
 To avoid clashing with the function declared in `openxr.h`, we prefix these functions with `thisLayer_`.
@@ -93,6 +94,8 @@ list(APPEND extensions "XR_TEST_test_me")  # <---
 list(APPEND extension_versions "42")       # <---
 ```
 
+If the layer do not implement any extension, you must comment this example value.
+
 Uncomment the `list(APPEND ...)` calls, and replace them with the name and version of the extension.
 
 This will do three things:
@@ -101,7 +104,7 @@ This will do three things:
 2. It will add the list of extensions supported by the layer in `layer_config.hpp`.
 3. It will activate code in the layer initialization function to create an instance that adds listed extensions in their `enabledExtensionNames` array.
 
-If the extension in question requires adding new OpenXR functions, they need to be added to the shim dispatch table. However, since these functions presumably don't exist in the runtime/next layer (as you are the implementation point), you don't need to find a function pointer to call back to.
+If the extension in question requires adding new OpenXR functions, they need to be added to the shim dispatch table. However, since these functions presumably don't exist in the runtime/next layer (as you are the implementation point), you don't need to find a function pointer to wrap around.
 
 For example, this template implements a bogus extension called `XR_TEST_test_me`; this function's only purpose is to add the function `xrTestMeTEST`. This function only prints a message to the standard output.
 
@@ -202,9 +205,11 @@ XR_ENABLE_API_LAYERS=XR_APILAYER_test_me
 
 You can also specify `XR_LOADER_DEBUG=all` to cause the loader to output all debug messages it can to standard output. This is useful for debugging layer loading issues.
 
+For more installation about OpenXR API Layer intallation and usage, please reffer to the OpenXR Loader specification chapters about API Layers. The [discovery](https://github.com/KhronosGroup/OpenXR-SDK-Source/blob/main/specification/loader/api_layer.adoc#api-layer-discovery) section might be of particular interest to layer developers.
+
 ## Legal
 
-Copyright (C) 2021 Artur Brainville, distributed under the MIT license agreement. (REUSE 3.0 compliant.) 
+Copyright (C) 2021-2022 Artur Brainville, distributed under the MIT license agreement. (REUSE 3.0 compliant.) 
 
 This is built on top of the OpenXR SDK. The OpenXR SDK is distributed by the Khronos group under the terms of the Apache 2.0 License. 
 This template project does not link against any binaries from the OpenXR SDK but includes header files generated from the OpenXR registry and the standard OpenXR loader project.
