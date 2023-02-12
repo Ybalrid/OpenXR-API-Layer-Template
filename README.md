@@ -79,6 +79,10 @@ Each function must be registered. To do so, you should add a line similar to thi
 functions.emplace_back("xrEndFrame", PFN_xrVoidFunction(thisLayer_xrEndFrame));
 ```
 
+Due to the lifetime of API layers being tied to the OpenXR instance, we need to be able to initialize and cleaup the layer context when applications create and destroy their OpenXR instance, in case they do it multiple times. One example of an application with that behavior is Microsoft Flight Simulator 2020. Failing to do so causes problems (see issue #2).
+
+Thus, all layers created with this framework will, at miminum, hook the `xrDestroyInstance` function. Please do not remove or disable the hook for this funciton, or you may have created a semi-silent bug that will crashes *some* applications, but not others!
+
 ## Layer implemented extensions
 
 API Layers *can* implement OpenXR instance extensions.

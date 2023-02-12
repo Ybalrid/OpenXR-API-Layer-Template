@@ -39,6 +39,9 @@ public:
 
 	static void CreateLayerContext(PFN_xrGetInstanceProcAddr getInstanceProcAddr, const std::vector<ShimFunction>& shims = {});
 
+	//This function must be called as part of the instance destruction hook
+	static void DestroyLayerContext();
+
 	static OpenXRLayer& GetLayerContext();
 	XrResult GetInstanceProcAddr(XrInstance instance, const char* name, PFN_xrVoidFunction* function);
 	void LoadDispatchTable(XrInstance instance);
