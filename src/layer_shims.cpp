@@ -5,7 +5,24 @@
 // Initial Author: Arthur Brainville <ybalrid@ybalrid.info>
 
 #include "layer_shims.hpp"
+
+#include <cassert>
 #include <iostream>
+
+//IMPORTANT: to allow for multiple instance creation/destruction, the contect of the layer must be re-initialized when the instance is being destroyed.
+//Hooking xrDestroyInstance is the best way to do that.
+XRAPI_ATTR XrResult XRAPI_CALL thisLayer_xrDestroyInstance(
+	XrInstance instance)
+{
+	PFN_xrDestroyInstance nextLayer_xrDestroyInstance = GetNextLayerFunction(xrDestroyInstance);
+
+	OpenXRLayer::DestroyLayerContext();
+
+	assert(nextLayer_xrDestroyInstance != nullptr);
+	return nextLayer_xrDestroyInstance(instance);
+}
+
+
 
 //Define the functions implemented in this layer like this:
 XRAPI_ATTR XrResult XRAPI_CALL thisLayer_xrEndFrame(XrSession session,
@@ -42,6 +59,7 @@ XRAPI_ATTR XrResult XRAPI_CALL thisLayer_xrTestMeTEST(XrSession session)
 std::vector<OpenXRLayer::ShimFunction> ListShims()
 {
 	std::vector<OpenXRLayer::ShimFunction> functions;
+	functions.emplace_back("xrDestroyInstance", PFN_xrVoidFunction(thisLayer_xrDestroyInstance));
 
 	//List every functions that is callable on this API layer
 	functions.emplace_back("xrEndFrame", PFN_xrVoidFunction(thisLayer_xrEndFrame));

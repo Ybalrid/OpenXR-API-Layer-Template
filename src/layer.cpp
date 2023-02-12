@@ -52,6 +52,12 @@ void OpenXRLayer::CreateLayerContext(PFN_xrGetInstanceProcAddr getInstanceProcAd
 		this_layer->functions[shim.functionName] = shim;
 }
 
+void OpenXRLayer::DestroyLayerContext()
+{
+	delete this_layer;
+	this_layer = nullptr;
+}
+
 OpenXRLayer& OpenXRLayer::GetLayerContext()
 {
 	if (this_layer)
