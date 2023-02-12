@@ -209,7 +209,7 @@ For more installation about OpenXR API Layer intallation and usage, please reffe
 
 ## Legal
 
-Copyright (C) 2021-2022 Artur Brainville, distributed under the MIT license agreement. (REUSE 3.0 compliant.) 
+Copyright (C) 2021-2023 Artur Brainville, distributed under the MIT license agreement. (REUSE 3.0 compliant.) 
 
 This is built on top of the OpenXR SDK. The OpenXR SDK is distributed by the Khronos group under the terms of the Apache 2.0 License. 
 This template project does not link against any binaries from the OpenXR SDK but includes header files generated from the OpenXR registry and the standard OpenXR loader project.
