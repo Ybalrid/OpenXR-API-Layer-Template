@@ -11,7 +11,14 @@
 #define XR_OS_WINDOWS
 #define WIN32_LEAN_AND_MEAN
 #define NOMINMAX
-#include <Windows.h>
+#include <windows.h>
+#elif defined __linux__
+// openxr loader recommends using secure_getenv, which was introduced in glibc 2.17
+#include <stdlib.h>
+#define XR_OS_LINUX
+#if __GLIBC__ >= 2 && __GLIBC_MINOR__ >= 17
+#define HAVE_SECURE_GETENV
+#endif
 #endif
 
 #include "openxr/openxr_platform_defines.h"

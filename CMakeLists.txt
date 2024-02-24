@@ -45,7 +45,7 @@ if(WIN32)
 	add_compile_definitions(/w26812)
 	endif()
 else()
-	set(library_filename "${library_name}.so")
+	set(library_filename "../lib${library_name}.so")
 endif(WIN32)
 
 configure_file(
