@@ -52,7 +52,7 @@ XrResult thisLayer_xrCreateApiLayerInstance(const XrInstanceCreateInfo* info, co
 
 	//Prepare to call this function down the layer chain
 	XrApiLayerCreateInfo newApiLayerCreateInfo;
-	memcpy(&newApiLayerCreateInfo, &apiLayerInfo, sizeof(newApiLayerCreateInfo));
+	memcpy(&newApiLayerCreateInfo, apiLayerInfo, sizeof(newApiLayerCreateInfo));
 	newApiLayerCreateInfo.nextInfo = apiLayerInfo->nextInfo->next;
 
 	XrInstanceCreateInfo instanceCreateInfo = *info;
