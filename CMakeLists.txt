@@ -35,6 +35,9 @@ file(MAKE_DIRECTORY ${layer_directory})
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${layer_directory})
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_DEBUG ${layer_directory})
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELEASE ${layer_directory})
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${layer_directory})
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY_DEBUG ${layer_directory})
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY_RELEASE ${layer_directory})
 set(current_folder_path_prefix "./") # This works on windows too now with up-to-date OpenXR loaders
 set(CMAKE_CXX_STANDARD 17)
 
@@ -45,7 +48,8 @@ if(WIN32)
 	add_compile_definitions(/w26812)
 	endif()
 else()
-	set(library_filename "${library_name}.so")
+	set(library_filename "lib${library_name}.so")
+	set(CMAKE_SHARED_LINKER_FLAGS "-Wl,--no-undefined")
 endif(WIN32)
 
 configure_file(

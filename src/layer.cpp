@@ -7,6 +7,7 @@
 #include "layer.hpp"
 #include "layer_config.hpp"
 #include <stdexcept>
+#include <string.h>
 
 OpenXRLayer* OpenXRLayer::this_layer = nullptr;
 std::vector<const char*> OpenXRLayer::extensions{};
@@ -18,14 +19,13 @@ void OpenXRLayer::SetEnabledExtensions(const std::vector<const char*>& extension
 
 bool OpenXRLayer::IsExtensionEnabled(const char* extensionName)
 {
-	const auto iterator = std::find_if(extensions.begin(),
-		extensions.end(),
-		[extensionName](const char* enabled_extension)
-		{
-			return 0 == strcmp(extensionName, enabled_extension);
-		});
+	for(const auto ext : extensions)
+	{
+		if(!strcmp(ext, extensionName))
+			return true;
+	}
 
-	return iterator != extensions.end();
+	return false;
 }
 
 OpenXRLayer::OpenXRLayer(PFN_xrGetInstanceProcAddr nextLayerGetInstanceProcAddr) :
